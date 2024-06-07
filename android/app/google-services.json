@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "919006256047",
+    "project_id": "gettogether-a6058",
+    "storage_bucket": "gettogether-a6058.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919006256047:android:b518c1eca2748ff134ed5a",
+        "android_client_info": {
+          "package_name": "com.gettogether"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7AiIaialRPgsUQ2Sqgm6G2AZyK2DFUTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

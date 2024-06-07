@@ -17,6 +17,11 @@ end
 target 'GetTogether' do
   config = use_native_modules!
 
+  #to handle firebase integration below 3 lines works
+  flags = get_default_flags()
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
+
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
