@@ -1,12 +1,11 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
-import {BLACK, WHITE} from '../utils/colors';
+import {BLACK, WHITE} from '../utils/colors/colors';
 import {HOME, LOGIN, LOGIN_NAVIGATOR} from '../utils/RouteConstants';
 import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 
 const Splash = () => {
-  console.log('9...........');
   // Set an initializing state whilst Firebase connects
 
   const [data, setGotData] = useState(false);
@@ -18,7 +17,6 @@ const Splash = () => {
     const unsubscribe = navigation.addListener('focus', () => {
       // Check if the user's email is verified, and show a message if it's not
       const thisUser = auth().currentUser;
-      console.log(thisUser);
       if (thisUser) {
         setGotData(true);
       }
@@ -26,7 +24,7 @@ const Splash = () => {
     setLoginCheck(true);
     return unsubscribe;
   }, []);
-  console.log(data);
+
   if (loginCheck) {
     setTimeout(() => {
       if (data) {

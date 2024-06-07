@@ -1,6 +1,6 @@
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import React from 'react';
-import {DARK_CYAN, WHITE} from '../utils/colors';
+import {DARK_CYAN, WHITE} from '../utils/colors/colors';
 
 const TouchableButton = ({onPress, title, buttonStyle}) => {
   return (

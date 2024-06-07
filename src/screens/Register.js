@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet, Pressable, ToastAndroid} from 'react-native';
-import React, {useState} from 'react';
-import {DARK_CYAN, WHITE} from '../utils/colors';
+import React, {useEffect, useState} from 'react';
+import {DARK_CYAN, WHITE} from '../utils/colors/colors';
 import {HOME, LOGIN} from '../utils/RouteConstants';
 import TouchableButton from '../components/TouchableButton';
 import InputBox from '../components/InputBox';
@@ -8,12 +8,15 @@ import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import {getHeight} from '../utils/commonFunctions';
 import firestore from '@react-native-firebase/firestore';
+import messaging from '@react-native-firebase/messaging';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Register = () => {
   const navigation = useNavigation();
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [token, setToken] = useState('');
 
   const saveDataToFirestore = async () => {
     try {
@@ -21,7 +24,26 @@ const Register = () => {
         name: name,
         email: email,
         password: password,
+        token: token,
       });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    getFcm();
+  }, []);
+  const getFcm = async () => {
+    const tok = await messaging().getToken();
+    setToken(tok);
+  };
+  const storeDataInLocal = async () => {
+    try {
+      const data = {
+        NAME: name,
+        EMAIL: email,
+      };
+      await AsyncStorage.setItem('UserData', JSON.stringify(data));
     } catch (e) {
       console.log(e);
     }
@@ -34,6 +56,7 @@ const Register = () => {
           password,
         );
         await saveDataToFirestore();
+        await storeDataInLocal();
         // Send email verification link
         await userCredential.user.sendEmailVerification();
         navigation?.goBack();

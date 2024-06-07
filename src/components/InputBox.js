@@ -1,6 +1,6 @@
 import {TextInput, StyleSheet} from 'react-native';
 import React from 'react';
-import {DARK_CYAN} from '../utils/colors';
+import {DARK_CYAN} from '../utils/colors/colors';
 
 const InputBox = props => {
   const {

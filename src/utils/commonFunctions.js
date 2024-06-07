@@ -34,3 +34,7 @@ export const requestCameraPermission = async () => {
     return true;
   }
 };
+
+export const isNotNullOrUndefined = data => {
+  return data !== null && data !== undefined;
+};

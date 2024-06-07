@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, Pressable, ToastAndroid} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {DARK_CYAN, WHITE} from '../utils/colors';
+import {DARK_CYAN, WHITE} from '../utils/colors/colors';
 import InputBox from '../components/InputBox';
 import TouchableButton from '../components/TouchableButton';
 import {HOME, PHONE_NUMBER, REGISTER} from '../utils/RouteConstants';
@@ -37,7 +37,7 @@ const Login = () => {
       ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
     }
   };
-  console.log('Come.......');
+
   const navigation = useNavigation();
   return (
     <View style={styles.view}>
