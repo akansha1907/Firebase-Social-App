@@ -10,6 +10,7 @@ import {getHeight} from '../utils/commonFunctions';
 import firestore from '@react-native-firebase/firestore';
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
 
 const Register = () => {
   const navigation = useNavigation();
@@ -18,18 +19,6 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [token, setToken] = useState('');
 
-  const saveDataToFirestore = async () => {
-    try {
-      firestore().collection('Users').add({
-        name: name,
-        email: email,
-        password: password,
-        token: token,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
   useEffect(() => {
     getFcm();
   }, []);
@@ -37,6 +26,23 @@ const Register = () => {
     const tok = await messaging().getToken();
     setToken(tok);
   };
+  const saveDataToFirestore = async () => {
+    try {
+      firestore().collection('Users').add({
+        name: name,
+        email: email,
+        password: password,
+        token: token,
+        userId: uuid.v4(),
+      });
+      firestore().collection('Tokens').add({
+        tokens: token,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const storeDataInLocal = async () => {
     try {
       const data = {

@@ -40,6 +40,10 @@ const PostTab = () => {
     }
   };
   let token = '';
+  const getFcm = async () => {
+    token = await messaging().getToken();
+    console.log(token);
+  };
   useEffect(() => {
     getFcm();
   }, []);
@@ -58,9 +62,7 @@ const PostTab = () => {
   useEffect(() => {
     getStoredData();
   }, []);
-  const getFcm = async () => {
-    token = await messaging().getToken();
-  };
+
   const uploadImage = async () => {
     try {
       const reference = storage().ref(imageData[0].fileName);

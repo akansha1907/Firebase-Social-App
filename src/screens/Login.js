@@ -8,7 +8,8 @@ import {HOME, PHONE_NUMBER, REGISTER} from '../utils/RouteConstants';
 import {getHeight} from '../utils/commonFunctions';
 import auth from '@react-native-firebase/auth';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-
+import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,9 +22,19 @@ const Login = () => {
           email,
           password,
         );
+
         // Check if user email is verified
         if (userCredential.user.emailVerified) {
-          navigation?.navigate(HOME);
+          firestore()
+            .collection('Users')
+            .where('email', '==', email)
+            .get()
+            .then(querySnapshot => {
+              console.log('console value', querySnapshot);
+              if (querySnapshot.docs.length > 0) {
+                goToHome(querySnapshot?.docs[0]._data?.userId);
+              }
+            });
         } else {
           ToastAndroid.show(
             'Email address is not verified yet',
@@ -37,7 +48,11 @@ const Login = () => {
       ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
     }
   };
-
+  const goToHome = async userId => {
+    console.log(userId);
+    await AsyncStorage.setItem('USERID', userId);
+    navigation.navigate(HOME);
+  };
   const navigation = useNavigation();
   return (
     <View style={styles.view}>
